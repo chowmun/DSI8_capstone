@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+
+
+   <title>Book Recommender System</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700|Playfair+Display:400,700,900" rel="stylesheet">
+   <link rel="stylesheet" href={{ url_for("static", filename="fonts/icomoon/style.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/bootstrap.min.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/magnific-popup.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/jquery-ui.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/owl.carousel.min.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/owl.theme.default.min.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/bootstrap-datepicker.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="fonts/flaticon/font/flaticon.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/aos.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/style.css")}}>
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+
+ </head>
+
+   <style>
+.customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border-radius: 20px;
+  border-spacing: 100px;
+  width: 100%;
+}
+
+td, tr {
+  border: 2px solid #ddd; padding: 15px; font-size:15px; font-family: sans-serif;
+  padding: 15px;
+}
+
+tr:nth-child(even){background-color: #B4CFEC;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  border: 1px solid #ddd;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #1E90FF;
+  color: white;
+}
+.active a{
+    color: red !important;
+}
+
+.button2{
+background-color: red;
+border-radius:6px;
+color: white;
+padding: 12px 28px;
+text-decoration: none;
+margin: 4px 2px;
+cursor: pointer;
+position:absolute;
+left: 71.5%;
+right: -35%;
+}
+</style>
+
+ <body >
+    <header class="site-navbar pt-3" role="banner" style="background-image: url({{ url_for('static', filename='images/header1.png')}});background-size: width: 1500; opacity:0.8">
+     <div class="container-fluid">
+       <div class="row align-items-center">
+         <div class="col-6 col-xl-6 logo">
+           <h1 class="mb-0"><a href="{{url_for('index')}}" class="text-black h2 mb-0">Book Recommender System</a></h1>
+         </div>
+           <div class="col-6 mr-auto py-3 text-right" style="position: relative; top: 3px;">
+            <div class="social-icons d-inline">
+            </div>
+            <a href="#" class="site-menu-toggle js-menu-toggle text-black d-inline-block d-xl-none"><span class="icon-menu h3"></span></a></div>
+          </div>
+
+         <div class="col-12 d-none d-xl-block border-top">
+           <nav class="site-navigation text-center " role="navigation">
+             <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block mb-0">
+               <li class="active"><a href="{{ url_for('index') }}" >Homepage</a></li>
+               <li><a href="{{url_for('background')}}">Background</a></li>
+               <li><a href="{{url_for('EDA')}}">EDA</a></li>
+               <li><a href="{{url_for('RS')}}">Recommender System</a></li>
+               <li><a href="{{url_for('conclusion')}}">Conclusion</a></li>
+             </ul>
+           </nav>
+         </div>
+       </div>
+   </header>
+
+    <div class="container">
+      <span class="post-category bg-warning text-white m-0 mb-2"><font size='4'>Personalised recommendation</font></span>
+       <h3 class="mb-3"><font color='black' size='4'><strong>Please rate the following books:</strong></front></a></h3>
+        <div class="row">
+         <div class="col-sm-2">
+       </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <form method="post" action="collab">
+      <div class="table-responsive">
+      <table id="table1">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Book Cover</th>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Publication Year</th>
+            <th>Genre</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+         {% for i in book_to_rate.index %}
+         <tr>
+          <td>{{i+1}}</td>
+
+          <td class="w3-list-img"><img src="{{book_to_rate.loc[i, 'image_url']}}" alt="Image" class="rounded"/></a> </td>
+          <td><b>{{book_to_rate.loc[i, 'title']}}</b></td>
+          <td><font color='light blue'>{{book_to_rate.loc[i, 'authors']}}</font></td>
+          <td>{{book_to_rate.loc[i, 'original_publication_year']}}</td>
+          <td>{{book_to_rate.loc[i, 'genre']}}</td>
+          <td><select name={{book_to_rate.loc[i, 'book_id']}}, id="book_rating">
+              {% for a in range(1,6) %}
+               <option value={{a}}>{{a}}</option>
+               {% endfor %}</select></td>
+         </tr>
+         {% endfor %}
+       </tbody>
+        </table>
+        <ul class="actions">
+          <input type="submit" value="Press to submit your rating!" class="button2" class="w3ls_footer_grid_right">
+        </ul>
+      </form>
+    <div><br><br></div>
+  </div>
+</div>
+
+<!-- footer -->
+  <div class="site-footer">
+    <div class="container">
+          <h3 class="footer-heading mb-4">A General Assembly Data Science Immersive Capstone Project 2019</h3>
+          <p>By Chow Mun - GA DSI-8</p>
+          <li><a href="https://chowmun.github.io//capstone/">Code and resources</a></li>
+          <li><a href="https://colorlib.com/">Design: Colorlib</a></li>
+          <li><a href="https://www.goodreads.com/">Thanks to: goodreads</a></li>
+      </div>
+  </div>
+
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            <!-- Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a> -->
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+
+      <script src={{ url_for("static", filename="js/jquery-3.3.1.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/jquery-migrate-3.0.1.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/jquery-ui.js")}}></script>
+      <script src={{ url_for("static", filename="js/popper.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/bootstrap.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/owl.carousel.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/jquery.stellar.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/jquery.countdown.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/jquery.magnific-popup.min.js")}}></script>
+      <script src={{ url_for("static", filename="js/bootstrap-datepicker.min.js")}}></script>
+
+      <script src={{ url_for("static", filename="js/aos.js")}}></script>
+      <script src={{ url_for("static", filename="js/main.js")}}></script>
+
+  </body>
+</html>

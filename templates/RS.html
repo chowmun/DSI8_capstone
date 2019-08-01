@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+
+
+   <title>RS</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700|Playfair+Display:400,700,900" rel="stylesheet">
+   <link rel="stylesheet" href={{ url_for("static", filename="fonts/icomoon/style.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/bootstrap.min.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/magnific-popup.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/jquery-ui.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/owl.carousel.min.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/owl.theme.default.min.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/bootstrap-datepicker.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="fonts/flaticon/font/flaticon.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/aos.css")}}>
+   <link rel="stylesheet" href={{ url_for("static", filename="css/style.css")}}>
+ </head>
+ <body>
+
+   <div class="site-mobile-menu">
+     <div class="site-mobile-menu-header">
+       <div class="site-mobile-menu-close mt-3">
+         <span class="icon-close2 js-menu-toggle"></span>
+       </div>
+     </div>
+     <div class="site-mobile-menu-body"></div>
+   </div>
+
+   <header class="site-navbar pt-3" role="banner" >
+     <div class="container-fluid">
+       <div class="row align-items-center">
+
+         <div class="col-6 col-xl-6 logo">
+           <h1 class="mb-0"><a href="{{url_for('index')}}" class="text-black h2 mb-0">Book Recommender System</a></h1>
+         </div>
+
+
+       <div class="col-6 mr-auto py-3 text-right" style="position: relative; top: 3px;">
+         <div class="social-icons d-inline">
+         </div>
+         <a href="#" class="site-menu-toggle js-menu-toggle text-black d-inline-block d-xl-none"><span class="icon-menu h3"></span></a></div>
+       </div>
+
+         <div class="col-12 d-none d-xl-block border-top">
+           <nav class="site-navigation text-center " role="navigation">
+
+             <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block mb-0">
+               <li><a href="{{url_for('index')}}" >Homepage</a></li>
+               <li><a href="{{url_for('background')}}">Background</a></li>
+               <li><a href="{{url_for('EDA')}}">EDA</a></li>
+               <li  class="active"><a href="{{url_for('RS')}}">Recommender System</a></li>
+               <li><a href="{{url_for('conclusion')}}">Conclusion</a></li>
+             </ul>
+           </nav>
+         </div>
+       </div>
+   </header>
+
+<!-- header -->
+    <div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('../static/images/pic6.jpg');">
+      <div class="container">
+        <div class="row same-height justify-content-center">
+          <div class="col-md-12 col-lg-10">
+            <div class="post-entry text-center">
+              <h1 class="mb-4">Recommeder System</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="../static/images/r1.png" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-8 ml-auto">
+            <h2>Evaluation</h2>
+            <p class="mb-4">Evaluation helps us to determine the most suitable algorithms and hyperparameters for a model.<br>
+                            In this model, We will split the data randomly into train and test set with a ratio of 4:1. <br><br>
+                            The evaluation of metrics are computed using test data with either of the methods: <br>
+                            1. Top-N accuracy metrics<br>
+                            2. NDCG(Normalized Discounted Cumulative Gain)<br>
+                            3. MAP(mean average precision)<br>
+                            More information about the methods can be found on this <a href="http://fastml.com/evaluating-recommender-systems/">post.</a><br><br>
+                            In this model, we will use Top-N accuracy metric with **Recall@N** which evaluates whether the recommended book is among the top N items (hit) in the ranked list of 101 recommendations for a user.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 order-md-2">
+            <img src="../static/images/r2.png" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-8 mr-auto order-md-1">
+            <h2>Popular choices</h2>
+            <p>This is a common approach based on 'wisdom of the crowds'. The recommended items generally interesting for most people. <br>
+               The recommendation will be the same for all the users and it is highly depends on what we rank on.<br>
+               For our popularity model, we sorted out the books based on the number of ratings(ratings_count) follow by its rating as show in the table beside.  <br>
+
+
+               </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="../static/images/r3.png" alt="Image" class="img-fluid" width="350" height="500">
+          </div>
+          <div class="col-md-8 ml-auto">
+            <h2>Content based model</h2>
+            <p class="mb-4">Content based filtering provides recommendation based on similarity among items, the score given is based on product features such as types, price etc.<br><br>
+                            In our model, we find the similarity of books using genre and book summary but both of them are not provided by the datasets.
+                            Thus, we used BeautifulSoup to scrape them from the <a href="https://www.goodreads.com/">Goodreads website</a> using the <i>goodread_book_id</i>. <br><br>
+                            Next, we need to use NLP to convert the scrapped data (words) into number following these steps:  <br>
+                            1. <i>RegEx</i>, to include only alphabets and numbers.<br>
+                            2. <i>Stemming</i>, reduces the words into their base form.<br>
+                            3. Remove stop words, removes meaningless words from the corpus.<br>
+                            4. <i>Tfidvectorizer</i>, penalizes common words while increasing the importance of rare words.<br>
+                            5. <i>StandardScaler</i>, transforms all the values in the resulting matrix [0, 1] bound.<br>
+                            6. Generate the cosine similarity using the output vectors.
+                            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 order-md-2">
+            <img src="../static/images/r4.png" alt="Image" class="img-fluid" width="300" height="400">
+          </div>
+          <div class="col-md-8 mr-auto order-md-1">
+            <h2>Collaborative model</h2>
+            <p>Collaborative filtering(CF) makes use of the assumption that if A has the same preference as B on a set of items, given an item which is rated by A but unknown to B. B is more likely to give the same rating as A on that item. <br><br>
+               The common method for CF is known as Nearest Neighborhood. As the name suggest, it finds the K-nearest neighbors (KNN) of targeted user based on distance. The items which are not rated by the user will be predicted based on the neighbors'(similar users) rating.<br>
+               However, this method doesn't work well if the neighbors were not rated the items (sparcity problem). It is also not computationally efficient for massive data.<br><br>
+               </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 order-md-2">
+            <img src="../static/images/r5.png" alt="Image" class="img-fluid"><br><br><br><br>
+            <img src="../static/images/r7.png" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-8 mr-auto order-md-1">
+            <h2></h2>
+            <p> Matrix factorization is another CF method that could avoid sparsity and scalability problems.
+                It decomposes the original sparse matrix into the product of two low-dimensional rectangular matrices with latent factors as shown in Diagram 1.<br><br>
+                There are many ways to factor matrices. Singular value decompostion (SVD) is useful for making recommendations. Mathematically, it decomposes R into two unitary matrices and a diagonal matrix:<br>
+                <img src="../static/images/r6.png" style="position:absolute; LEFT:200px; RIGHT:-250px" width="150" height="60"><br><br>
+                1. R is user ratings matrix<br>
+                2. U is the user “features” matrix, represents users preference on each features<br>
+                3. Σ is the diagonal matrix of singular values<br>
+                4.<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAMCAYAAACA0IaCAAAAqUlEQVQoka2QbQ0DIRBEnwQkIOEkIAEJSEBCJVQCEnDQk1AJddBz0P5gctlcgIakLyF8LbPDwDo3jQw8gAgUYANw5uI8FB64A1VrgGTmqnWUzvnoo45XihGwVJnocsiFxZvuvXo/uGPXuLrqPdiA10gIuXqbfaD/bXReZmKZlpt15fqlPGmhDwkSC7TAR8VRztKkGU5iiXHoSxy03Pw/xHbGoS+TmeTwiy/YWiMJWVP/4wAAAABJRU5ErkJggg==">
+                is the item “features” matrix, represents composition of each features in the item<br><br>
+                We could sort the values of Σ by decreasing the absolute value and truncate matrix Σ to first k dimensions (k singular values), then reconstruct R as matrix A as illustrated in Diagram 2.<br>
+                To achieve A ≈ R, value k is selected in a way that matrix A captures most of the variance within matrix R.
+               </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 order-md-2"><br><br><br><br>
+            <img src="../static/images/r8.png" alt="Image" class="img-fluid" width="600" height="140">
+          </div>
+          <div class="col-md-6 mr-auto order-md-1"><br><br>
+            <h2><font color="white">#</font>Book recommender system</h2>
+            <p><font color="white">1</font> 1. First we take a look at our filtered data from EDA.</p>
+          </div>
+        </div>
+
+
+      <!-- <div class="site-section"> -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 order-md-2" ><br><br>
+                <img src="../static/images/r9.png" alt="Image" class="img-fluid" width="600" height="200">
+              </div>
+              <div class="col-md-6 mr-auto order-md-1"><br><br>
+                <p>2. In order to use matrix factorization, we need to have one row per user and one column per book. This can be done using python pivot function.<br></p>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+
+            <!-- <div class="site-section"> -->
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 order-md-2"><br><br>
+                    <img src="../static/images/r10.png" alt="Image" class="img-fluid" width="600" height="200">
+                  </div>
+                  <div class="col-md-6 mr-auto order-md-1"><br><br>
+                    <p>3. Defines the number of latent factors and decompose the matrix using <i>svds</i></> from <i>Scipy</i>.</p>
+                  </div>
+                </div>
+              </div>
+            <!-- </div> -->
+
+                <!-- <div class="site-section"> -->
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-6 order-md-2"><br><br>
+                          <img src="../static/images/r11.png" alt="Image" class="img-fluid" width="600" height="200"><br><br>
+                        </div>
+                        <div class="col-md-6 mr-auto order-md-1"><br><br>
+                          <p>4. Reconstructs the matrix. The matrix is not longer sparse, we can use it to recommend some books for users.</p><br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    <!-- footer -->
+
+        <div class="site-footer">
+          <div class="container">
+                <h3 class="footer-heading mb-4">A General Assembly Data Science Immersive Capstone Project 2019</h3>
+                <p>By Chow Mun - GA DSI-8</p>
+                <li><a href="https://chowmun.github.io//capstone/">Code and resources</a></li>
+                <li><a href="https://colorlib.com/">Design: Colorlib</a></li>
+                <li><a href="https://www.goodreads.com/">Thanks to: goodreads</a></li>
+          </div>
+        </div>
+                <p>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  <!-- Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a> -->
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  </p>
+
+
+            <script src={{ url_for("static", filename="js/jquery-3.3.1.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/jquery-migrate-3.0.1.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/jquery-ui.js")}}></script>
+            <script src={{ url_for("static", filename="js/popper.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/bootstrap.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/owl.carousel.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/jquery.stellar.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/jquery.countdown.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/jquery.magnific-popup.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/bootstrap-datepicker.min.js")}}></script>
+            <script src={{ url_for("static", filename="js/aos.js")}}></script>
+            <script src={{ url_for("static", filename="js/main.js")}}></script>
+
+        </body>
+    </html>

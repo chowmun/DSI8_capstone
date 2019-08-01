@@ -1,0 +1,162 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+
+
+    <title>Book Recommender System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700|Playfair+Display:400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href={{ url_for("static", filename="fonts/icomoon/style.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/bootstrap.min.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/magnific-popup.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/jquery-ui.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/owl.carousel.min.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/owl.theme.default.min.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/bootstrap-datepicker.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="fonts/flaticon/font/flaticon.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/aos.css")}}>
+    <link rel="stylesheet" href={{ url_for("static", filename="css/style.css")}}>
+  </head>
+  <body>
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar pt-3" role="banner" >
+      <div class="container-fluid">
+        <div class="row align-items-center">
+
+          <div class="col-6 col-xl-6 logo">
+            <h1 class="mb-0"><a href="{{url_for('index')}}" class="text-black h2 mb-0">Book Recommender System</a></h1>
+          </div>
+
+
+        <div class="col-6 mr-auto py-3 text-right" style="position: relative; top: 3px;">
+          <div class="social-icons d-inline">
+          </div>
+          <a href="#" class="site-menu-toggle js-menu-toggle text-black d-inline-block d-xl-none"><span class="icon-menu h3"></span></a></div>
+        </div>
+
+          <div class="col-12 d-none d-xl-block border-top">
+            <nav class="site-navigation text-center " role="navigation">
+
+              <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block mb-0">
+                <li class="active"><a href="{{url_for('index')}}" >Homepage</a></li>
+                <li><a href="{{url_for('background')}}">Background</a></li>
+                <li><a href="{{url_for('EDA')}}">EDA</a></li>
+                <li><a href="{{url_for('RS')}}">Recommender System</a></li>
+                <li><a href="{{url_for('conclusion')}}">Conclusion</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+    </header>
+
+<!-- header -->
+
+     <div class="slide-one-item home-slider owl-carousel">
+      {% for i in popular_df.index %}
+
+       <div class="site-cover site-cover-sm same-height overlay" style="background-image: url('../static/images/{{popular_df.loc[i, 'pic']}}'); background-size: width: 600px; height:700px">
+       <div class="container">
+        <span class="post-category text-white bg-primary mb-3"><front size="20">Popular Book</front></span>
+        <div class="row same-height align-items-center">
+          <div class="col-md-12 col-lg-12 col-xs-18">
+            <div class="post-entry">
+              <span class="post-category text-white bg-info mb-3">Average Rating: {{popular_df.loc[i, 'average_rating']}} </span>
+              <h2 class="mb-4"><a href="#">{{popular_df.loc[i, 'title']}}</a></h2>
+              <div class="post-meta align-items-center text-left">
+                <span class="d-inline-block mt-1">By {{popular_df.loc[i, 'authors']}}</span>
+                <span>&nbsp;-&nbsp; {{(popular_df.loc[i, 'original_publication_year'])}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    <div class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="rounded border p-4">
+              <div class="row align-items-stretch">
+
+                <div class="col-md-8 col-lg-4 mb-3 mb-lg-0">
+                  <a href="choose_book" class="d-flex post-sm-entry">
+                    <figure class="mr-3 mb-0"><img src="{{ url_for("static", filename="images/pic1.jpg")}}" alt="Image" class="rounded"></figure>
+                    <div>
+                      <span class="post-category bg-danger text-white m-0 mb-2">Content Based</span>
+                      <h2 class="mb-0">Find books similar to your favourite book</h2>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="col-md-8 col-lg-4 mb-3 mb-lg-0">
+                  <a href="{{ url_for('rate_book') }}" class="d-flex post-sm-entry">
+                    <figure class="mr-3 mb-0"><img src="{{ url_for("static", filename="images/pic2.jpg")}}" alt="Image" class="rounded"></figure>
+                    <div>
+                      <span class="post-category bg-warning text-white m-0 mb-2">Personalised </span>
+                      <h2 class="mb-0">Find books based on your preferences</h2>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="col-md-4 col-lg-4 mb-3 mb-lg-0">
+                  <a href="single.html" class="d-flex post-sm-entry">
+                    <figure class="mr-5 mb-0"><img src="{{ url_for("static", filename="images/pic3.jpg")}}" alt="Image" class="rounded"></figure>
+                    <div>
+                      <span class="post-category bg-success text-white m-0 mb-2">Chatbot</span>
+                      <h2 class="mb-0">Chat with chatbot</h2>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- footer -->
+
+    <div class="site-footer">
+      <div class="container">
+            <h3 class="footer-heading mb-4">A General Assembly Data Science Immersive Capstone Project 2019</h3>
+            <p>By Chow Mun - GA DSI-8</p>
+            <li><a href="https://chowmun.github.io//capstone/">Code and resources</a></li>
+            <li><a href="https://colorlib.com/">Design: Colorlib</a></li>
+            <li><a href="https://www.goodreads.com/">Thanks to: goodreads</a></li>
+      </div>
+    </div>
+            <p>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a> -->
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
+
+
+        <script src={{ url_for("static", filename="js/jquery-3.3.1.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/jquery-migrate-3.0.1.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/jquery-ui.js")}}></script>
+        <script src={{ url_for("static", filename="js/popper.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/bootstrap.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/owl.carousel.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/jquery.stellar.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/jquery.countdown.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/jquery.magnific-popup.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/bootstrap-datepicker.min.js")}}></script>
+        <script src={{ url_for("static", filename="js/aos.js")}}></script>
+        <script src={{ url_for("static", filename="js/main.js")}}></script>
+
+    </body>
+</html>
